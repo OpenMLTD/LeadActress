@@ -108,7 +108,9 @@ namespace LeadActress.Runtime.Dancing {
                     ApplyNewMaterial(oldMaterial, newMaterial);
                     newMaterials[i] = newMaterial;
                 } else if (oldMaterial.name.Contains("eyel") || oldMaterial.name.Contains("eyer")) {
-                    newMaterial.shader = Shader.Find("Unlit/Eyes");
+                    newMaterial.shader = Shader.Find("Unlit/Dual");
+                } else if (oldMaterial.name.Contains("hair")) {
+                    newMaterial.shader = Shader.Find("Unlit/Dual");
                 } else {
                     // newMaterial.shader = Shader.Find("Unlit/Texture");
                     newMaterial = Instantiate(clothesMaterial);

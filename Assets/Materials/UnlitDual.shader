@@ -1,10 +1,10 @@
-﻿Shader "Unlit/Eyes"
+﻿Shader "Unlit/Dual"
 {
     Properties
     {
         _MainTex ("Main Texture", 2D) = "white" {}
         _SubTex ("Highlight Texture", 2D) = "white" {}
-        _IrisColor ("Iris Color", Color) = (1, 1, 1, 1)
+        _ShadeColor ("Shade Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -40,7 +40,7 @@
 
             sampler2D _MainTex;
             sampler2D _SubTex;
-            float4 _IrisColor;
+            float4 _ShadeColor;
             float4 _MainTex_ST;
             float4 _SubTex_ST;
 
@@ -50,7 +50,7 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv_main = TRANSFORM_TEX(v.uv_main, _MainTex);
                 o.uv_sub = TRANSFORM_TEX(v.uv_sub, _SubTex);
-                o.color = _IrisColor;
+                o.color = _ShadeColor;
                 UNITY_TRANSFER_FOG(o, o.vertex);
                 return o;
             }
