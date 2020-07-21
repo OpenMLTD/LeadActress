@@ -277,7 +277,7 @@ namespace LeadActress.Runtime.Dancing {
                 var formationControls = scenario.scenario.Where(c => c.type == (int)ScenarioDataType.FormationChange).ToArray();
 
                 foreach (var ev in formationControls) {
-                    if (ev.layer != 0) {
+                    if (ev.layer != (int)AppealType.None) {
                         continue;
                     }
 
@@ -321,9 +321,12 @@ namespace LeadActress.Runtime.Dancing {
                                 idolOffset = formations[config.FormationNumber - 1];
                             }
 
-                            tx += idolOffset.x;
-                            ty += idolOffset.y;
-                            tz += idolOffset.z;
+                            var worldRotation = Quaternion.AngleAxis(idolOffset.w, Vector3.up);
+                            var newOrigin = worldRotation * new Vector3(tx, ty, tz);
+
+                            tx = newOrigin.x + idolOffset.x;
+                            ty = newOrigin.y + idolOffset.y;
+                            tz = newOrigin.z + idolOffset.z;
                         }
 
                         posX[i] = new Keyframe(frame.Time, tx);

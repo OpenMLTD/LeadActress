@@ -49,7 +49,7 @@
 
         Type67 = 67,
 
-        Type68 = 68,
+        DanceAnimationSeekFrame = 68,
 
         Type72 = 72,
 

@@ -364,7 +364,7 @@ MonoBehaviour:
   bundleLoader: {fileID: 567596771}
   commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
     type: 2}
-  _motionNumber: 1
+  _motionNumber: 4
   _formationNumber: 4
 --- !u!114 &210953093
 MonoBehaviour:
@@ -554,7 +554,7 @@ MonoBehaviour:
   bundleLoader: {fileID: 567596771}
   commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
     type: 2}
-  _motionNumber: 1
+  _motionNumber: 2
   _formationNumber: 2
 --- !u!114 &316762237
 MonoBehaviour:
@@ -620,7 +620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bundleLoader: {fileID: 567596771}
-  stageSerial: 45
+  skyboxMaterial: {fileID: 2100000, guid: 1479fbac1062c4b43a89a45e34d9626a, type: 2}
+  stageSerial: 59
   loadPropScenes: 1
   loadAllPropScenes: 1
   onlyLoadPropScenes: 
@@ -1206,7 +1207,7 @@ MonoBehaviour:
   bundleLoader: {fileID: 567596771}
   commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
     type: 2}
-  _motionNumber: 1
+  _motionNumber: 5
   _formationNumber: 5
 --- !u!114 &1437316702
 MonoBehaviour:
@@ -1623,7 +1624,7 @@ MonoBehaviour:
   bundleLoader: {fileID: 567596771}
   commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
     type: 2}
-  _motionNumber: 1
+  _motionNumber: 3
   _formationNumber: 3
 --- !u!114 &2050638781
 MonoBehaviour:

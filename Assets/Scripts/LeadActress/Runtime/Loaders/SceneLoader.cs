@@ -14,6 +14,9 @@ namespace LeadActress.Runtime.Loaders {
         [Tooltip("The " + nameof(BatchAssetBundleLoader) + " used to load asset bundles.")]
         public BatchAssetBundleLoader bundleLoader;
 
+        [Tooltip("The skybox material used for open scenes.")]
+        public Material skyboxMaterial;
+
         [Tooltip("Stage serial number, from 1 to 999.")]
         [Range(MltdSimulationConstants.MinStageSerial, MltdSimulationConstants.MaxStageSerial)]
         public int stageSerial = 1;
@@ -133,7 +136,7 @@ namespace LeadActress.Runtime.Loaders {
             }
         }
 
-        private static void FixShaders([NotNull] GameObject gameObject) {
+        private void FixShaders([NotNull] GameObject gameObject) {
             if (
                 // gameObject.name.Contains("lt_glow_far") || // Disable texture-based gradient lights from the front of the stage
                 // gameObject.name.Contains("lt_glow_beam") || // Disable texture-based gradient lights on stage
@@ -146,8 +149,24 @@ namespace LeadActress.Runtime.Loaders {
             }
 
             if (gameObject.TryGetComponent<MeshRenderer>(out var renderer)) {
-                foreach (var material in renderer.materials) {
-                    material.shader = Shader.Find("Custom/Standard");
+                var materials = renderer.materials;
+                var materialReplaced = false;
+
+                for (var i = 0; i < renderer.materials.Length; i++) {
+                    var material = renderer.materials[i];
+
+                    if (material.name.Contains("_sky")) {
+                        var newMaterial = skyboxMaterial;
+                        materials[i] = newMaterial;
+                        Destroy(material);
+                        materialReplaced = true;
+                    } else {
+                        material.shader = Shader.Find("Custom/Standard");
+                    }
+                }
+
+                if (materialReplaced) {
+                    renderer.materials = materials;
                 }
 
                 // Enable two-sided shadow casting, except for walls (for better effect in theaters)
