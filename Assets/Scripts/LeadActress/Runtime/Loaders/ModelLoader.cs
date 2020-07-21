@@ -153,6 +153,7 @@ namespace LeadActress.Runtime.Loaders {
             var result = new ModelLoadResult(headInstance, bodyInstance, headSway, bodySway);
 
             ModelFixer.FixGameObjectHierarchy(result);
+            ModelFixer.FixMeshRenderers(result);
 
             physicsImporter.ImportPhysics(result);
 

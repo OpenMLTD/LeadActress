@@ -17,6 +17,9 @@ namespace LeadActress.Runtime.Loaders {
         [Tooltip("The skybox material used for open scenes.")]
         public Material skyboxMaterial;
 
+        [Tooltip("The material for screens.")]
+        public Material vjMaterial;
+
         [Tooltip("Stage serial number, from 1 to 999.")]
         [Range(MltdSimulationConstants.MinStageSerial, MltdSimulationConstants.MaxStageSerial)]
         public int stageSerial = 1;
@@ -97,7 +100,7 @@ namespace LeadActress.Runtime.Loaders {
             var rootObjects = scene.GetRootGameObjects();
 
             foreach (var obj in rootObjects) {
-                FixShaders(obj);
+                FixMaterials(obj);
             }
         }
 
@@ -132,17 +135,18 @@ namespace LeadActress.Runtime.Loaders {
             var rootObjects = scene.GetRootGameObjects();
 
             foreach (var obj in rootObjects) {
-                FixShaders(obj);
+                FixMaterials(obj);
             }
         }
 
-        private void FixShaders([NotNull] GameObject gameObject) {
+        private void FixMaterials([NotNull] GameObject gameObject) {
             if (
                 // gameObject.name.Contains("lt_glow_far") || // Disable texture-based gradient lights from the front of the stage
                 // gameObject.name.Contains("lt_glow_beam") || // Disable texture-based gradient lights on stage
                 // gameObject.name.Contains("lt_glow_center") || // Emitters on the lights on stage
                 gameObject.name.Contains("lt_glow") ||
-                gameObject.name.Contains("ltmap") // Disable light maps
+                gameObject.name.Contains("ltmap") || // Disable light maps
+                gameObject.name.Contains("pPlane") // Disable audience generation plates
             ) {
                 gameObject.SetActive(false);
                 return;
@@ -157,6 +161,11 @@ namespace LeadActress.Runtime.Loaders {
 
                     if (material.name.Contains("_sky")) {
                         var newMaterial = skyboxMaterial;
+                        materials[i] = newMaterial;
+                        Destroy(material);
+                        materialReplaced = true;
+                    } else if (material.name.Contains("_vj")) {
+                        var newMaterial = vjMaterial;
                         materials[i] = newMaterial;
                         Destroy(material);
                         materialReplaced = true;
@@ -185,7 +194,7 @@ namespace LeadActress.Runtime.Loaders {
 
             for (var i = 0; i < count; i += 1) {
                 var child = t.GetChild(i);
-                FixShaders(child.gameObject);
+                FixMaterials(child.gameObject);
             }
         }
 

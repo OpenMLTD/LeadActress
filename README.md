@@ -34,9 +34,11 @@ Then, set corresponding properties on the components in the scene. The default s
 
 [Demo](https://www.bilibili.com/video/BV1Vf4y1R7Us/)
 
-## Thanks
+## Credits
 
-[Santarh/MToon](https://github.com/Santarh/MToon)
+- [Santarh/MToon](https://github.com/Santarh/MToon)
+- [naudio/NLayer](https://github.com/naudio/NLayer)
+- [Unlit shadowcaster](https://styly.cc/tips/unlitcastshadow-go-shader/)
 
 ## License
 

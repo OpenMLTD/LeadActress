@@ -2,6 +2,7 @@
 using System.IO;
 using Cysharp.Threading.Tasks;
 using LeadActress.Runtime.Dancing;
+using NLayer;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -18,6 +19,25 @@ namespace LeadActress.Runtime.Loaders {
 
             AudioClip clip;
 
+#if UNITY_EDITOR || UNITY_STANDALONE
+            using (var www = new UnityWebRequest(uri)) {
+                www.downloadHandler = new DownloadHandlerBuffer();
+
+                await www.SendWebRequest();
+
+                var data = www.downloadHandler.data;
+
+                using (var memoryStream = new MemoryStream(data, false)) {
+                    using (var mpeg = new MpegFile(memoryStream)) {
+                        var samples = new float[mpeg.Length];
+                        mpeg.ReadSamples(samples, 0, samples.Length);
+
+                        clip = AudioClip.Create(relativePath, samples.Length, mpeg.Channels, mpeg.SampleRate, false);
+                        clip.SetData(samples, 0);
+                    }
+                }
+            }
+#else
             using (var www = new UnityWebRequest(uri)) {
                 www.downloadHandler = new DownloadHandlerAudioClip(uri, AudioType.MPEG);
 
@@ -27,6 +47,7 @@ namespace LeadActress.Runtime.Loaders {
             }
 
             clip.name = relativePath;
+#endif
 
             return clip;
         }

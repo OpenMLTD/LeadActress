@@ -1,5 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace LeadActress.Runtime.Dancing {
     [AddComponentMenu("MLTD/MLTD Model Fixer")]
@@ -26,6 +28,30 @@ namespace LeadActress.Runtime.Dancing {
         public static void FixGameObjectHierarchy([NotNull] ModelLoadResult loadResult) {
             AddBodyScaleNode(loadResult.Body);
             // BindHead(loadResult.Body, loadResult.Head);
+        }
+
+        public static void FixMeshRenderers([NotNull] ModelLoadResult loadResult) {
+            var q = new Queue<GameObject>();
+
+            q.Enqueue(loadResult.Body);
+
+            while (q.Count > 0) {
+                var obj = q.Dequeue();
+                var t = obj.transform;
+
+                var childCount = t.childCount;
+
+                if (childCount > 0) {
+                    for (var i = 0; i < childCount; i += 1) {
+                        var childTransform = t.GetChild(i);
+                        q.Enqueue(childTransform.gameObject);
+                    }
+                }
+
+                if (obj.TryGetComponent<MeshRenderer>(out var renderer)) {
+                    renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
+                }
+            }
         }
 
         private static void AddBodyScaleNode([NotNull] GameObject body) {
