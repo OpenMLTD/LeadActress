@@ -106,6 +106,14 @@ namespace LeadActress.Runtime.Dancing {
 
                     break;
                 }
+                case (int)ScenarioDataType.DanceAnimationSeekFrame: {
+                    if (ev.idol == placement.formationNumber + 10) {
+                        var seconds = (float)ev.seekFrame / FrameRate.Mltd;
+                        _modelAnimator.PlayInFixedTime(CommonAnimationControllerBuilder.SeekFrameTargetName, (int)AppealType.None, seconds);
+                    }
+
+                    break;
+                }
                 case (int)ScenarioDataType.AppealStart: {
                     var appealType = commonResourceProperties.appealType;
 
@@ -139,10 +147,10 @@ namespace LeadActress.Runtime.Dancing {
 
         private void Update() {
             if (playerControl.isOnPlaying) {
-                _modelAnimator.Rebind();
                 _modelAnimator.enabled = true;
             } else if (playerControl.isOnStopping) {
                 _modelAnimator.enabled = false;
+                _modelAnimator.Rebind();
                 _modelAnimator.ResetAllParameters();
             }
         }

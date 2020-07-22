@@ -7,15 +7,42 @@ using UnityEngine;
 namespace LeadActress.Runtime.Loaders {
     internal static class CommonAnimationControllerBuilder {
 
+        private const string Layer0Name = "No Appeal";
+
+        private const string Layer1Name = "Special Appeal";
+
+        private const string Layer2Name = "Another Appeal";
+
+        private const string Layer3Name = "Gorgeous Appeal";
+
+        private const string DefaultStateName = "Default";
+
+        private const string AppealStateName = "Appeal";
+
+        private const string EnterSpecialAppeal = "EnterSpecialAppeal";
+
+        private const string ExitSpecialAppeal = "ExitSpecialAppeal";
+
+        private const string EnterAnotherAppeal = "EnterAnotherAppeal";
+
+        private const string ExitAnotherAppeal = "ExitAnotherAppeal";
+
+        private const string EnterGorgeousAppeal = "EnterGorgeousAppeal";
+
+        private const string ExitGorgeousAppeal = "ExitGorgeousAppeal";
+
+        // https://docs.unity3d.com/ScriptReference/Animator.PlayInFixedTime.html
+        public const string SeekFrameTargetName = Layer0Name + "." + DefaultStateName;
+
         [NotNull]
         public static AnimatorController BuildAnimationController([NotNull] AnimationGroup group, [NotNull] string controllerName) {
             var controller = new AnimatorController();
             controller.name = controllerName;
 
-            controller.AddLayer("No Appeal");
-            controller.AddLayer("Special Appeal");
-            controller.AddLayer("Another Appeal");
-            controller.AddLayer("Gorgeous Appeal");
+            controller.AddLayer(Layer0Name);
+            controller.AddLayer(Layer1Name);
+            controller.AddLayer(Layer2Name);
+            controller.AddLayer(Layer3Name);
 
             controller.AddParameter(EnterSpecialAppeal, AnimatorControllerParameterType.Trigger);
             controller.AddParameter(ExitSpecialAppeal, AnimatorControllerParameterType.Trigger);
@@ -28,7 +55,7 @@ namespace LeadActress.Runtime.Loaders {
 
             {
                 var states = layers[0].stateMachine;
-                var s0 = states.AddState("Default");
+                var s0 = states.AddState(DefaultStateName);
                 states.defaultState = s0;
 
                 s0.motion = group.mainMotion;
@@ -74,9 +101,9 @@ namespace LeadActress.Runtime.Loaders {
 
             var states = layer.stateMachine;
 
-            var s0 = states.AddState("Default");
+            var s0 = states.AddState(DefaultStateName);
             states.defaultState = s0;
-            var s1 = states.AddState("Appeal");
+            var s1 = states.AddState(AppealStateName);
             s1.motion = motion;
 
             var t0 = s0.AddTransition(s1, false);
@@ -86,18 +113,6 @@ namespace LeadActress.Runtime.Loaders {
             t1.hasExitTime = false;
             t1.AddCondition(AnimatorConditionMode.If, 0, exitTrigger);
         }
-
-        private const string EnterSpecialAppeal = "EnterSpecialAppeal";
-
-        private const string ExitSpecialAppeal = "ExitSpecialAppeal";
-
-        private const string EnterAnotherAppeal = "EnterAnotherAppeal";
-
-        private const string ExitAnotherAppeal = "ExitAnotherAppeal";
-
-        private const string EnterGorgeousAppeal = "EnterGorgeousAppeal";
-
-        private const string ExitGorgeousAppeal = "ExitGorgeousAppeal";
 
     }
 }

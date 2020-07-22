@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b306636a37cc4c4984d7a6c8f80e73fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motionNumber: 5
+  _motionNumber: 1
   _formationNumber: 5
 --- !u!1 &266304300
 GameObject:
@@ -677,7 +677,7 @@ MonoBehaviour:
   bundleLoader: {fileID: 567596771}
   skyboxMaterial: {fileID: 2100000, guid: 1479fbac1062c4b43a89a45e34d9626a, type: 2}
   vjMaterial: {fileID: 2100000, guid: 7d0b58a8846d54a47b4519a031e43e58, type: 2}
-  stageSerial: 59
+  stageSerial: 47
   loadPropScenes: 1
   loadAllPropScenes: 1
   onlyLoadPropScenes: 
@@ -1570,7 +1570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &981981234
 Transform:
   m_ObjectHideFlags: 0
@@ -2088,7 +2088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b306636a37cc4c4984d7a6c8f80e73fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motionNumber: 3
+  _motionNumber: 1
   _formationNumber: 3
 --- !u!1 &1363257531
 GameObject:
@@ -2212,7 +2212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b306636a37cc4c4984d7a6c8f80e73fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motionNumber: 2
+  _motionNumber: 1
   _formationNumber: 2
 --- !u!1 &1521417259
 GameObject:
@@ -2731,7 +2731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b306636a37cc4c4984d7a6c8f80e73fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _motionNumber: 4
+  _motionNumber: 1
   _formationNumber: 4
 --- !u!1 &1886630388
 GameObject:

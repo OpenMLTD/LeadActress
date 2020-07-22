@@ -179,7 +179,12 @@ namespace LeadActress.Runtime.Loaders {
                 }
 
                 // Enable two-sided shadow casting, except for walls (for better effect in theaters)
-                if (!gameObject.name.Contains("wall_")) {
+                if (
+                    gameObject.name.Contains("wall_") ||
+                    gameObject.name.Contains("ceiling")
+                ) {
+                    // Keep it one sided
+                } else {
                     renderer.shadowCastingMode = ShadowCastingMode.TwoSided;
                 }
             }

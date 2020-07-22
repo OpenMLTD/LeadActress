@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: comm_res
   m_EditorClassIdentifier: 
   appealType: 1
-  baseResourceName: glowmp
-  danceResourceName: glowm+
-  appealResourceName: glowm+
-  cameraResourceName: glowm+
-  scenarioResourceName: glowm+
+  baseResourceName: kururi
+  danceResourceName: kururi
+  appealResourceName: kururi
+  cameraResourceName: kururi
+  scenarioResourceName: kururi
