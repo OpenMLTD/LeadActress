@@ -19,7 +19,7 @@ namespace LeadActress.Runtime.Dancing {
             _variation = scenarioLoader.variation;
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             if (playerControl.isOnPlaying) {
                 InitStates();
             } else if (playerControl.isOnStopping) {

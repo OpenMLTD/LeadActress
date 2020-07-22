@@ -9,33 +9,15 @@ using UnityEngine;
 namespace LeadActress.Runtime.Loaders {
     internal static class DanceAnimation {
 
-        public sealed class CreateConfig {
-
-            public CreateConfig() {
-                UseFormation = true;
-                FormationNumber = 1;
-            }
-
-            public bool UseFormation { get; set; }
-
-            public int FormationNumber { get; set; }
-
-            [NotNull]
-            public static CreateConfig Default() {
-                return new CreateConfig();
-            }
-
-        }
-
         [NotNull]
-        public static AnimationClip CreateFrom([NotNull] CharacterImasMotionAsset motion, [CanBeNull] ScenarioScrObj scenario, [NotNull] string name, [NotNull] CreateConfig config) {
+        public static AnimationClip CreateFrom([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
             var frameDict = CreateGroupedFramesByPath(motion);
-            var clip = CreateClipFromGroupedFrames(frameDict, scenario, name, config);
+            var clip = CreateClipFromGroupedFrames(frameDict, name);
             return clip;
         }
 
         [NotNull]
-        private static IReadOnlyDictionary<string, List<DanceKeyFrame>> CreateGroupedFramesByPath([NotNull] CharacterImasMotionAsset motion) {
+        private static Dictionary<string, List<DanceKeyFrame>> CreateGroupedFramesByPath([NotNull] CharacterImasMotionAsset motion) {
             var frameCount = motion.curves.Max(curve => curve.values.Length);
             var frameDict = new Dictionary<string, List<DanceKeyFrame>>();
 
@@ -266,27 +248,8 @@ namespace LeadActress.Runtime.Loaders {
         }
 
         [NotNull]
-        private static AnimationClip CreateClipFromGroupedFrames([NotNull] IReadOnlyDictionary<string, List<DanceKeyFrame>> frameDict, [CanBeNull] ScenarioScrObj scenario, [NotNull] string clipName, [NotNull] CreateConfig config) {
+        private static AnimationClip CreateClipFromGroupedFrames([NotNull] Dictionary<string, List<DanceKeyFrame>> frameDict, [NotNull] string clipName) {
             var clip = new AnimationClip();
-
-            var formationList = new TimedList<int, Vector4[]>();
-
-            if (config.UseFormation) {
-                Debug.Assert(scenario != null);
-
-                var formationControls = scenario.scenario.Where(c => c.type == (int)ScenarioDataType.FormationChange).ToArray();
-
-                foreach (var ev in formationControls) {
-                    if (ev.layer != (int)AppealType.None) {
-                        continue;
-                    }
-
-                    var frameIndex = (int)Math.Round(ev.absTime * FrameRate.Mltd);
-                    var formations = ev.formation;
-
-                    formationList.AddOrUpdate(frameIndex, formations);
-                }
-            }
 
             clip.frameRate = FrameRate.Mltd;
             clip.name = clipName;
@@ -309,24 +272,6 @@ namespace LeadActress.Runtime.Loaders {
                         var ty = frame.PositionY.Value;
                         // ReSharper disable once PossibleInvalidOperationException
                         var tz = frame.PositionZ.Value;
-
-                        if (path == "MODEL_00") {
-                            formationList.TryGetCurrentValue(i, out var formations);
-                            Vector4 idolOffset;
-
-                            if (formations == null || formations.Length < config.FormationNumber) {
-                                idolOffset = Vector4.zero;
-                            } else {
-                                idolOffset = formations[config.FormationNumber - 1];
-                            }
-
-                            var worldRotation = Quaternion.AngleAxis(idolOffset.w, Vector3.up);
-                            var newOrigin = worldRotation * new Vector3(tx, ty, tz);
-
-                            tx = newOrigin.x + idolOffset.x;
-                            ty = newOrigin.y + idolOffset.y;
-                            tz = newOrigin.z + idolOffset.z;
-                        }
 
                         posX[i] = new Keyframe(frame.Time, tx);
                         posY[i] = new Keyframe(frame.Time, ty);
@@ -356,19 +301,6 @@ namespace LeadActress.Runtime.Loaders {
                         var ry = frame.AngleY.Value;
                         // ReSharper disable once PossibleInvalidOperationException
                         var rz = frame.AngleZ.Value;
-
-                        if (path == "MODEL_00") {
-                            formationList.TryGetCurrentValue(i, out var formations);
-                            Vector4 idolOffset;
-
-                            if (formations == null || formations.Length < config.FormationNumber) {
-                                idolOffset = Vector4.zero;
-                            } else {
-                                idolOffset = formations[config.FormationNumber - 1];
-                            }
-
-                            ry += idolOffset.w;
-                        }
 
                         var q = Quaternion.Euler(rx, ry, rz);
                         rotX[i] = new Keyframe(frame.Time, q.x);

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: comm_res
   m_EditorClassIdentifier: 
   _songResourceName: glowmp
+  _appealType: 1

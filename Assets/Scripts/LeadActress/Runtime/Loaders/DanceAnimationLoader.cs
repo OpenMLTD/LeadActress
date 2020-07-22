@@ -28,13 +28,13 @@ namespace LeadActress.Runtime.Loaders {
             set => _formationNumber = value;
         }
 
-        public async UniTask<AnimatorController> LoadAsync([NotNull] ScenarioScrObj scenarioData) {
-            var group = await LoadClipsAsync(scenarioData);
+        public async UniTask<AnimatorController> LoadAsync() {
+            var group = await LoadClipsAsync();
             var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"dan_{commonResourceProperties.songResourceName}_{motionNumber:00}#{formationNumber:00}");
             return controller;
         }
 
-        private async UniTask<AnimationGroup> LoadClipsAsync([NotNull] ScenarioScrObj scenarioData) {
+        private async UniTask<AnimationGroup> LoadClipsAsync() {
             if (_asyncLoadInfo != null) {
                 return await ReturnExistingAsync();
             }
@@ -81,16 +81,13 @@ namespace LeadActress.Runtime.Loaders {
             AssetBundle appealBundle = null;
             bool? appealBundleFound = null;
 
-            var cfg = DanceAnimation.CreateConfig.Default();
-            cfg.FormationNumber = formationNumber;
-
             AnimationClip mainDance;
 
             {
                 var assetPath = $"assets/imas/resources/exclude/imo/dance/{songResourceName}/{danceAssetName}_dan.imo.asset";
                 var motionData = mainDanceBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
 
-                mainDance = DanceAnimation.CreateFrom(motionData, scenarioData, danceAssetName, cfg);
+                mainDance = DanceAnimation.CreateFrom(motionData, danceAssetName);
             }
 
             async UniTask<AnimationClip> LoadAppealMotionAsync(string postfix) {
@@ -99,7 +96,7 @@ namespace LeadActress.Runtime.Loaders {
 
                 if (mainDanceBundle.Contains(assetPath)) {
                     var motionData = mainDanceBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
-                    result = DanceAnimation.CreateFrom(motionData, scenarioData, $"{danceAssetName}_{postfix}", cfg);
+                    result = DanceAnimation.CreateFrom(motionData, $"{danceAssetName}_{postfix}");
                 } else {
                     if (appealBundleFound.HasValue) {
                         if (!appealBundleFound.Value) {
@@ -113,7 +110,7 @@ namespace LeadActress.Runtime.Loaders {
 
                     if (appealBundle != null && appealBundle.Contains(assetPath)) {
                         var motionData = appealBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
-                        result = DanceAnimation.CreateFrom(motionData, scenarioData, $"{danceAssetName}_{postfix}", cfg);
+                        result = DanceAnimation.CreateFrom(motionData, $"{danceAssetName}_{postfix}");
                     } else {
                         result = null;
                     }

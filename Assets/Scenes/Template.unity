@@ -343,9 +343,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eae91dcded54d6bb68fde5a9b52e7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
+    type: 2}
   modelLoader: {fileID: 210953093}
   danceLoader: {fileID: 210953092}
-  scenarioLoader: {fileID: 1536438547}
+  mainScenarioSignal: {fileID: 1886630390}
+  variantScenarioSignal: {fileID: 1536438548}
+  variantScenarioLoader: {fileID: 1536438547}
   facialAnimator: {fileID: 210953090}
   playerControl: {fileID: 1661877133}
   _formationNumber: 4
@@ -554,9 +558,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eae91dcded54d6bb68fde5a9b52e7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
+    type: 2}
   modelLoader: {fileID: 316762237}
   danceLoader: {fileID: 316762236}
-  scenarioLoader: {fileID: 1536438547}
+  mainScenarioSignal: {fileID: 1886630390}
+  variantScenarioSignal: {fileID: 1536438548}
+  variantScenarioLoader: {fileID: 1536438547}
   facialAnimator: {fileID: 316762234}
   playerControl: {fileID: 1661877133}
   _formationNumber: 2
@@ -718,8 +726,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdf24fe01a4461899507ffa70f2cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
+    type: 2}
   targetCamera: {fileID: 266304302}
   targetIndirectCamera: {fileID: 447180660}
+  mainScenarioSignal: {fileID: 1886630390}
   playerControl: {fileID: 1661877133}
   cameraLoader: {fileID: 447180662}
   cameraControlMode: 0
@@ -1086,9 +1097,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eae91dcded54d6bb68fde5a9b52e7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
+    type: 2}
   modelLoader: {fileID: 1132244244}
   danceLoader: {fileID: 1132244243}
-  scenarioLoader: {fileID: 1536438547}
+  mainScenarioSignal: {fileID: 1886630390}
+  variantScenarioSignal: {fileID: 1536438548}
+  variantScenarioLoader: {fileID: 1536438547}
   facialAnimator: {fileID: 1132244241}
   playerControl: {fileID: 1661877133}
   _formationNumber: 1
@@ -1193,9 +1208,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eae91dcded54d6bb68fde5a9b52e7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
+    type: 2}
   modelLoader: {fileID: 1437316702}
   danceLoader: {fileID: 1437316701}
-  scenarioLoader: {fileID: 1536438547}
+  mainScenarioSignal: {fileID: 1886630390}
+  variantScenarioSignal: {fileID: 1536438548}
+  variantScenarioLoader: {fileID: 1536438547}
   facialAnimator: {fileID: 1437316699}
   playerControl: {fileID: 1661877133}
   _formationNumber: 5
@@ -1684,9 +1703,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eae91dcded54d6bb68fde5a9b52e7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
+    type: 2}
   modelLoader: {fileID: 2050638781}
   danceLoader: {fileID: 2050638780}
-  scenarioLoader: {fileID: 1536438547}
+  mainScenarioSignal: {fileID: 1886630390}
+  variantScenarioSignal: {fileID: 1536438548}
+  variantScenarioLoader: {fileID: 1536438547}
   facialAnimator: {fileID: 2050638778}
   playerControl: {fileID: 1661877133}
   _formationNumber: 3
