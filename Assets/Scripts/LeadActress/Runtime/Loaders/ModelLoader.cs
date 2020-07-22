@@ -180,6 +180,12 @@ namespace LeadActress.Runtime.Loaders {
         // e.g.: cb_ss001_015siz, cb_ex016_b
         private static readonly Regex BodyAssetNameRegex = new Regex("^cb_[a-z]{2}[0-9]{3}(?:_(?:[0-9]{3}[a-z]{3}|[a-z]+))?$");
 
+        [SerializeField]
+        private string _headCostumeName = "ss001";
+
+        [SerializeField]
+        private string _headCostumeVariation = "001har";
+
         // e.g.: ss001
         [SerializeField]
         private string _bodyCostumeName = "ss001";
@@ -187,12 +193,6 @@ namespace LeadActress.Runtime.Loaders {
         // e.g.: 015siz
         [SerializeField]
         private string _bodyCostumeVariation = "001har";
-
-        [SerializeField]
-        private string _headCostumeName = "ss001";
-
-        [SerializeField]
-        private string _headCostumeVariation = "001har";
 
         [CanBeNull]
         private AsyncLoadInfo<ModelLoadResult> _asyncLoadInfo;

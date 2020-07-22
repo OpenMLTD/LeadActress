@@ -216,7 +216,15 @@ namespace LeadActress.Runtime.Dancing {
 
             if (ev.param != _currFacialExprKey) {
 #if UNITY_EDITOR
-                Debug.Log($"Setting expr {ev.param.ToString()} for idol {placement.formationNumber.ToString()}");
+                string message;
+
+                if (_expressionMaps.ContainsKey(ev.param)) {
+                    message = $"Setting expr {ev.param.ToString()} for idol {placement.formationNumber.ToString()} @ {ev.absTime.ToString()}";
+                } else {
+                    message = $"Unknown expr {ev.param.ToString()} for idol {placement.formationNumber.ToString()} @ {ev.absTime.ToString()}";
+                }
+
+                Debug.Log(message);
 #endif
 
                 _prevFacialExprKey = _currFacialExprKey;

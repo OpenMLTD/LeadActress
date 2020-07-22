@@ -227,10 +227,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &10497269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,10 +509,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &262819023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,10 +787,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &378718009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -911,10 +911,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &396560484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1191,10 +1191,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &711268785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,10 +1413,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &908472953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1537,10 +1537,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &937912994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1791,10 +1791,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &1108432080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1948,10 +1948,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &1132244245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2072,10 +2072,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &1171272405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,10 +2196,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &1363257537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2444,10 +2444,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &1608342591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2472,6 +2472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1643315570}
   - component: {fileID: 1643315571}
+  - component: {fileID: 1643315572}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -2513,6 +2514,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df08ee457c5f43a684e9a6071a5631d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1643315572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643315569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcbcbcfdbd745889e4da4b3e8fe8cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startRect:
+    serializedVersion: 2
+    x: 10
+    y: 10
+    width: 75
+    height: 50
+  updateColor: 1
+  allowDrag: 1
+  frequency: 0.5
+  nbDecimal: 1
 --- !u!1 &1661877131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,10 +2715,10 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _bodyCostumeName: gs001
-  _bodyCostumeVariation: 201xxx
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _bodyCostumeName: ss005
+  _bodyCostumeVariation: 017kth
 --- !u!114 &1883476726
 MonoBehaviour:
   m_ObjectHideFlags: 0

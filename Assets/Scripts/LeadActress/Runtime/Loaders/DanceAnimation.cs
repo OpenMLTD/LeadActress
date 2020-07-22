@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Imas;
-using Imas.Live;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace LeadActress.Runtime.Loaders {
     internal static class DanceAnimation {
 
-        [NotNull]
-        public static AnimationClip CreateFrom([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
+        public static async UniTask<AnimationClip> CreateAsync([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
             var frameDict = CreateGroupedFramesByPath(motion);
-            var clip = CreateClipFromGroupedFrames(frameDict, name);
+
+            var clip = new AnimationClip();
+            clip.name = name;
+            clip.frameRate = FrameRate.Mltd;
+
+            await ApplyClipFromGroupedFrames(clip, frameDict);
+
             return clip;
         }
 
@@ -247,14 +252,17 @@ namespace LeadActress.Runtime.Loaders {
             return curValue * (1 - p) + nextValue * p;
         }
 
-        [NotNull]
-        private static AnimationClip CreateClipFromGroupedFrames([NotNull] Dictionary<string, List<DanceKeyFrame>> frameDict, [NotNull] string clipName) {
-            var clip = new AnimationClip();
-
-            clip.frameRate = FrameRate.Mltd;
-            clip.name = clipName;
+        private static async UniTask ApplyClipFromGroupedFrames([NotNull] AnimationClip clip, [NotNull] Dictionary<string, List<DanceKeyFrame>> frameDict) {
+            var counter = 0;
 
             foreach (var kv in frameDict) {
+                counter += 1;
+
+                if (counter >= FramesPerBatch) {
+                    counter = 0;
+                    await UniTask.Yield();
+                }
+
                 var path = kv.Key;
                 var frameList = kv.Value;
                 var frameListCount = frameList.Count;
@@ -320,9 +328,9 @@ namespace LeadActress.Runtime.Loaders {
                     clip.SetCurve(path, typeof(Transform), "localRotation.w", curveW);
                 }
             }
-
-            return clip;
         }
+
+        private const int FramesPerBatch = 50;
 
     }
 }

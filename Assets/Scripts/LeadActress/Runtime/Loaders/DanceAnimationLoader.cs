@@ -79,7 +79,7 @@ namespace LeadActress.Runtime.Loaders {
                 var assetPath = $"assets/imas/resources/exclude/imo/dance/{songResourceName}/{danceAssetName}_dan.imo.asset";
                 var motionData = mainDanceBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
 
-                mainDance = DanceAnimation.CreateFrom(motionData, danceAssetName);
+                mainDance = await DanceAnimation.CreateAsync(motionData, danceAssetName);
             }
 
             async UniTask<AnimationClip> LoadAppealMotionAsync(string postfix) {
@@ -88,7 +88,7 @@ namespace LeadActress.Runtime.Loaders {
 
                 if (mainDanceBundle.Contains(assetPath)) {
                     var motionData = mainDanceBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
-                    result = DanceAnimation.CreateFrom(motionData, $"{danceAssetName}_{postfix}");
+                    result = await DanceAnimation.CreateAsync(motionData, $"{danceAssetName}_{postfix}");
                 } else {
                     if (appealBundleFound.HasValue) {
                         if (!appealBundleFound.Value) {
@@ -102,7 +102,7 @@ namespace LeadActress.Runtime.Loaders {
 
                     if (appealBundle != null && appealBundle.Contains(assetPath)) {
                         var motionData = appealBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
-                        result = DanceAnimation.CreateFrom(motionData, $"{danceAssetName}_{postfix}");
+                        result = await DanceAnimation.CreateAsync(motionData, $"{danceAssetName}_{postfix}");
                     } else {
                         result = null;
                     }
