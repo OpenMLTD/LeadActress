@@ -229,8 +229,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &10497269
@@ -420,7 +423,7 @@ GameObject:
   - component: {fileID: 262819020}
   - component: {fileID: 262819019}
   m_Layer: 0
-  m_Name: Model (5)
+  m_Name: Model (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,7 +441,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 860470342}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &262819019
 MonoBehaviour:
@@ -511,10 +514,13 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _headCostumeName: gs001
-  _headCostumeVariation: 201xxx
+  _headCostumeName: ss005
+  _headCostumeVariation: 021mat
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: ss105
+  _bodyTextureOverride: 
   _importEyesHighlights: 0
   _importHairHighlights: 1
 --- !u!114 &262819023
@@ -530,7 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motionNumber: 1
-  _formationNumber: 5
+  _formationNumber: 4
 --- !u!1 &266304300
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,8 +799,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &378718009
@@ -919,8 +928,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &396560484
@@ -1201,8 +1213,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &711268785
@@ -1311,8 +1326,8 @@ Transform:
   - {fileID: 1132244240}
   - {fileID: 1363257532}
   - {fileID: 1171272400}
-  - {fileID: 1883476721}
   - {fileID: 262819018}
+  - {fileID: 1883476721}
   - {fileID: 981981234}
   m_Father: {fileID: 1643315570}
   m_RootOrder: 7
@@ -1425,8 +1440,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &908472953
@@ -1551,8 +1569,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &937912994
@@ -1692,7 +1713,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040678062}
-  m_LocalRotation: {x: -0.109381706, y: 0.87542605, z: -0.40821803, w: -0.23456971}
+  m_LocalRotation: {x: -0.06698737, y: 0.9330126, z: -0.25000033, w: -0.24999999}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1807,8 +1828,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &1108432080
@@ -1964,10 +1988,13 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _headCostumeName: gs001
-  _headCostumeVariation: 201xxx
-  _bodyCostumeName: ss005
-  _bodyCostumeVariation: 017kth
+  _headCostumeName: ss002
+  _headCostumeVariation: 025roc
+  _headCostumeOverride: 
+  _bodyCostumeName: ss002
+  _bodyCostumeVariation: 025roc
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &1132244245
@@ -2090,10 +2117,13 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _headCostumeName: gs001
-  _headCostumeVariation: 201xxx
-  _bodyCostumeName: ss005
-  _bodyCostumeVariation: 017kth
+  _headCostumeName: ss004
+  _headCostumeVariation: 024ann
+  _headCostumeOverride: 
+  _bodyCostumeName: ss004
+  _bodyCostumeVariation: 024ann
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &1171272405
@@ -2216,10 +2246,13 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _headCostumeName: gs001
-  _headCostumeVariation: 201xxx
-  _bodyCostumeName: ss005
-  _bodyCostumeVariation: 017kth
+  _headCostumeName: ss003
+  _headCostumeVariation: 026yur
+  _headCostumeOverride: 
+  _bodyCostumeName: ss003
+  _bodyCostumeVariation: 026yur
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &1363257537
@@ -2468,8 +2501,11 @@ MonoBehaviour:
   physicsImporter: {fileID: 799733004}
   _headCostumeName: gs001
   _headCostumeVariation: 201xxx
+  _headCostumeOverride: 
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 1
   _importHairHighlights: 1
 --- !u!114 &1608342591
@@ -2648,7 +2684,7 @@ GameObject:
   - component: {fileID: 1883476723}
   - component: {fileID: 1883476722}
   m_Layer: 0
-  m_Name: Model (4)
+  m_Name: Model (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2666,7 +2702,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 860470342}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1883476722
 MonoBehaviour:
@@ -2739,10 +2775,13 @@ MonoBehaviour:
   stageObject: {fileID: 1732317285}
   modelFixer: {fileID: 799733005}
   physicsImporter: {fileID: 799733004}
-  _headCostumeName: gs001
-  _headCostumeVariation: 201xxx
+  _headCostumeName: sr028
+  _headCostumeVariation: 017kth
+  _headCostumeOverride: sr128
   _bodyCostumeName: ss005
   _bodyCostumeVariation: 017kth
+  _bodyCostumeOverride: 
+  _bodyTextureOverride: 
   _importEyesHighlights: 0
   _importHairHighlights: 1
 --- !u!114 &1883476726
@@ -2758,7 +2797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motionNumber: 1
-  _formationNumber: 4
+  _formationNumber: 5
 --- !u!1 &1886630388
 GameObject:
   m_ObjectHideFlags: 0
