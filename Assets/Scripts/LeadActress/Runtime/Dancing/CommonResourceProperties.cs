@@ -1,24 +1,33 @@
-﻿using Imas.Live;
+﻿using System.Runtime.CompilerServices;
+using Imas.Live;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace LeadActress.Runtime.Dancing {
     public sealed class CommonResourceProperties : ScriptableObject {
 
-        public string songResourceName {
-            get => _songResourceName;
-            set => _songResourceName = value;
+        public AppealType appealType = AppealType.None;
+
+        [NotNull]
+        public string baseResourceName = "shtstr";
+
+        [NotNull]
+        public string audioResourceName {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => baseResourceName;
         }
 
-        public AppealType appealType {
-            get => _appealType;
-            set => _appealType = value;
-        }
+        [NotNull]
+        public string danceResourceName = "shtstr";
 
-        [SerializeField]
-        private string _songResourceName = "shtstr";
+        [NotNull]
+        public string appealResourceName = "shtstr";
 
-        [SerializeField]
-        private AppealType _appealType = AppealType.None;
+        [NotNull]
+        public string cameraResourceName = "shtstr";
+
+        [NotNull]
+        public string scenarioResourceName = "shtstr";
 
     }
 }

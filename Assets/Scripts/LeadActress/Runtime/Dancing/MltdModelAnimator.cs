@@ -24,10 +24,7 @@ namespace LeadActress.Runtime.Dancing {
 
         public PlayerControl playerControl;
 
-        public int formationNumber {
-            get => _formationNumber;
-            set => _formationNumber = value;
-        }
+        public ModelPlacement placement;
 
         private void Awake() {
             if (facialAnimator == null) {
@@ -44,14 +41,14 @@ namespace LeadActress.Runtime.Dancing {
         }
 
         private async void Start() {
-            if (formationNumber < MltdSimulationConstants.MinDanceFormation || formationNumber > MltdSimulationConstants.MaxDanceFormation) {
-                Debug.LogError($"Invalid formation number: {formationNumber}, should be {MltdSimulationConstants.MinDanceFormation} to {MltdSimulationConstants.MaxDanceFormation}.");
+            if (placement.formationNumber < MltdSimulationConstants.MinDanceFormation || placement.formationNumber > MltdSimulationConstants.MaxDanceFormation) {
+                Debug.LogError($"Invalid formation number: {placement.formationNumber}, should be {MltdSimulationConstants.MinDanceFormation} to {MltdSimulationConstants.MaxDanceFormation}.");
                 return;
             }
 
             var loaded = await modelLoader.LoadAndInstantiateAsync();
 
-            loaded.Body.name = GetIdolObjectName(formationNumber);
+            loaded.Body.name = GetIdolObjectName(placement.formationNumber);
 
             var modelAnimator = loaded.Body.GetComponent<Animator>();
             Debug.Assert(modelAnimator != null);
@@ -92,10 +89,10 @@ namespace LeadActress.Runtime.Dancing {
                         var formation = ev.formation;
                         Vector4 idolOffset;
 
-                        if (formation.Length < formationNumber) {
+                        if (formation.Length < placement.formationNumber) {
                             idolOffset = Vector4.zero;
                         } else {
-                            idolOffset = formation[formationNumber - 1];
+                            idolOffset = formation[placement.formationNumber - 1];
                         }
 
                         var t = _modelRoot.transform;
@@ -155,11 +152,6 @@ namespace LeadActress.Runtime.Dancing {
         private Animator _modelAnimator;
 
         private AnimatorController _animatorController;
-
-        [Tooltip("Which position does this idol stand.")]
-        [SerializeField]
-        [Range(MltdSimulationConstants.MinDanceFormation, MltdSimulationConstants.MaxDanceFormation)]
-        private int _formationNumber = MltdSimulationConstants.MinDanceFormation;
 
     }
 }

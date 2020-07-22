@@ -37,7 +37,7 @@ namespace LeadActress.Runtime.Loaders {
                 return await ReturnExistingAsync();
             }
 
-            var songResourceName = commonResourceProperties.songResourceName;
+            var songResourceName = commonResourceProperties.scenarioResourceName;
 
             if (string.IsNullOrWhiteSpace(songResourceName)) {
                 info.Fail();
@@ -58,7 +58,7 @@ namespace LeadActress.Runtime.Loaders {
 
         private UniTask<ScenarioScrObj> ReturnExistingAsync() {
             Debug.Assert(_asyncLoadInfo != null);
-            var resName = commonResourceProperties.songResourceName;
+            var resName = commonResourceProperties.scenarioResourceName;
             return AsyncLoadInfo.ReturnExistingAsync(_asyncLoadInfo, $"Failed to load scenario for {resName}.");
         }
 

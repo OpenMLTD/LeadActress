@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49207b6e2e3a4eb094e67d6d0c16cdf3, type: 3}
   m_Name: comm_res
   m_EditorClassIdentifier: 
-  _songResourceName: glowmp
-  _appealType: 1
+  appealType: 0
+  baseResourceName: glowmp
+  danceResourceName: glowm+
+  appealResourceName: glowm+
+  cameraResourceName: glowm+
+  scenarioResourceName: glowm+

@@ -13,7 +13,7 @@ namespace LeadActress.Runtime.Loaders {
         public CommonResourceProperties commonResourceProperties;
 
         public async UniTask<AudioClip> LoadAsync() {
-            var relativePath = $"song3_{commonResourceProperties.songResourceName}.mp3";
+            var relativePath = $"song3_{commonResourceProperties.audioResourceName}.mp3";
             var fullPath = Path.Combine(Application.streamingAssetsPath, relativePath);
             var uri = new Uri(fullPath);
 

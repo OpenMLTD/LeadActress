@@ -17,7 +17,7 @@ namespace LeadActress.Runtime.Loaders {
 
         public async UniTask<AnimatorController> LoadAsync(CameraControlMode cameraControlMode) {
             var group = await LoadClipsAsync(cameraControlMode);
-            var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"cam_{commonResourceProperties.songResourceName}");
+            var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"cam_{commonResourceProperties.cameraResourceName}");
             return controller;
         }
 
@@ -39,7 +39,7 @@ namespace LeadActress.Runtime.Loaders {
                 return await ReturnExistingAsync();
             }
 
-            var songResourceName = commonResourceProperties.songResourceName;
+            var songResourceName = commonResourceProperties.cameraResourceName;
 
             if (string.IsNullOrWhiteSpace(songResourceName)) {
                 info.Fail();
@@ -106,7 +106,7 @@ namespace LeadActress.Runtime.Loaders {
 
         private UniTask<AnimationGroup> ReturnExistingAsync() {
             Debug.Assert(_asyncLoadInfo != null);
-            var resName = commonResourceProperties.songResourceName;
+            var resName = commonResourceProperties.cameraResourceName;
             return AsyncLoadInfo.ReturnExistingAsync(_asyncLoadInfo, $"Failed to load camera animation for {resName}.");
         }
 

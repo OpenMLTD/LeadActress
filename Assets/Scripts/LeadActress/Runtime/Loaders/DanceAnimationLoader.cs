@@ -18,19 +18,11 @@ namespace LeadActress.Runtime.Loaders {
 
         public CommonResourceProperties commonResourceProperties;
 
-        public int motionNumber {
-            get => _motionNumber;
-            set => _motionNumber = value;
-        }
-
-        public int formationNumber {
-            get => _formationNumber;
-            set => _formationNumber = value;
-        }
+        public ModelPlacement placement;
 
         public async UniTask<AnimatorController> LoadAsync() {
             var group = await LoadClipsAsync();
-            var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"dan_{commonResourceProperties.songResourceName}_{motionNumber:00}#{formationNumber:00}");
+            var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"dan_{commonResourceProperties.danceResourceName}_{placement.motionNumber:00}#{placement.formationNumber:00}");
             return controller;
         }
 
@@ -52,24 +44,24 @@ namespace LeadActress.Runtime.Loaders {
                 return await ReturnExistingAsync();
             }
 
-            var songResourceName = commonResourceProperties.songResourceName;
+            var songResourceName = commonResourceProperties.danceResourceName;
 
             if (string.IsNullOrWhiteSpace(songResourceName)) {
                 info.Fail();
                 throw new FormatException("Song resource name is empty.");
             }
 
-            if (motionNumber < MltdSimulationConstants.MinDanceMotion || motionNumber > MltdSimulationConstants.MaxDanceMotion) {
+            if (placement.motionNumber < MltdSimulationConstants.MinDanceMotion || placement.motionNumber > MltdSimulationConstants.MaxDanceMotion) {
                 info.Fail();
-                throw new FormatException($"Invalid motion number: {motionNumber}, should be {MltdSimulationConstants.MinDanceMotion} to {MltdSimulationConstants.MaxDanceMotion}.");
+                throw new FormatException($"Invalid motion number: {placement.motionNumber}, should be {MltdSimulationConstants.MinDanceMotion} to {MltdSimulationConstants.MaxDanceMotion}.");
             }
 
-            if (formationNumber < MltdSimulationConstants.MinDanceFormation || motionNumber > MltdSimulationConstants.MaxDanceFormation) {
+            if (placement.formationNumber < MltdSimulationConstants.MinDanceFormation || placement.motionNumber > MltdSimulationConstants.MaxDanceFormation) {
                 info.Fail();
-                throw new FormatException($"Invalid formation number: {motionNumber}, should be {MltdSimulationConstants.MinDanceFormation} to {MltdSimulationConstants.MaxDanceFormation}.");
+                throw new FormatException($"Invalid formation number: {placement.motionNumber}, should be {MltdSimulationConstants.MinDanceFormation} to {MltdSimulationConstants.MaxDanceFormation}.");
             }
 
-            var danceAssetName = $"dan_{songResourceName}_{motionNumber:00}";
+            var danceAssetName = $"dan_{songResourceName}_{placement.motionNumber:00}";
 
             if (!DanceAssetNameRegex.IsMatch(danceAssetName)) {
                 info.Fail();
@@ -104,7 +96,7 @@ namespace LeadActress.Runtime.Loaders {
                         }
                     } else {
                         bool found;
-                        (appealBundle, found) = await TryLoadAppealBundleAsync();
+                        (appealBundle, found) = await TryLoadExternalAppealBundleAsync();
                         appealBundleFound = found;
                     }
 
@@ -130,12 +122,12 @@ namespace LeadActress.Runtime.Loaders {
             return animationGroup;
         }
 
-        private async UniTask<( AssetBundle, bool)> TryLoadAppealBundleAsync() {
+        private async UniTask<( AssetBundle, bool)> TryLoadExternalAppealBundleAsync() {
             AssetBundle appealBundle;
             bool successful;
 
             try {
-                appealBundle = await bundleLoader.LoadFromRelativePathAsync($"dan_{commonResourceProperties.songResourceName}_ap.imo.unity3d");
+                appealBundle = await bundleLoader.LoadFromRelativePathAsync($"dan_{commonResourceProperties.appealResourceName}_ap.imo.unity3d");
                 successful = true;
             } catch (FileNotFoundException) {
                 appealBundle = null;
@@ -147,22 +139,12 @@ namespace LeadActress.Runtime.Loaders {
 
         private UniTask<AnimationGroup> ReturnExistingAsync() {
             Debug.Assert(_asyncLoadInfo != null);
-            var resName = commonResourceProperties.songResourceName;
+            var resName = commonResourceProperties.danceResourceName;
             return AsyncLoadInfo.ReturnExistingAsync(_asyncLoadInfo, $"Failed to load dance for {resName}.");
         }
 
         // e.g.: dan_shtstr
-        private static readonly Regex DanceAssetNameRegex = new Regex(@"^dan_[a-z0-9]{6}_[0-9]{2}$");
-
-        [Tooltip("Which dance animation does this idol use.")]
-        [SerializeField]
-        [Range(MltdSimulationConstants.MinDanceMotion, MltdSimulationConstants.MaxDanceMotion)]
-        private int _motionNumber = MltdSimulationConstants.MinDanceMotion;
-
-        [Tooltip("Which position does this idol stand.")]
-        [SerializeField]
-        [Range(MltdSimulationConstants.MinDanceFormation, MltdSimulationConstants.MaxDanceFormation)]
-        private int _formationNumber = MltdSimulationConstants.MinDanceFormation;
+        private static readonly Regex DanceAssetNameRegex = new Regex(@"^dan_[a-z0-9]{5}[a-z0-9+]_[0-9]{2}$");
 
         [CanBeNull]
         private AsyncLoadInfo<AnimationGroup> _asyncLoadInfo;

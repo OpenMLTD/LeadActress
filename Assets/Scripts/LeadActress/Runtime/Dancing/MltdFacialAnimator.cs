@@ -16,10 +16,7 @@ namespace LeadActress.Runtime.Dancing {
 
         public SkinnedMeshRenderer faceRenderer { get; set; }
 
-        public int formationNumber {
-            get => _formationNumber;
-            set => _formationNumber = value;
-        }
+        public ModelPlacement placement;
 
         public TextAsset expressionMapAsset;
 
@@ -30,8 +27,8 @@ namespace LeadActress.Runtime.Dancing {
         }
 
         private void Start() {
-            if (formationNumber < MltdSimulationConstants.MinDanceFormation || formationNumber > MltdSimulationConstants.MaxDanceFormation) {
-                Debug.LogError($"Invalid formation number: {formationNumber}, should be {MltdSimulationConstants.MinDanceFormation} to {MltdSimulationConstants.MaxDanceFormation}.");
+            if (placement.formationNumber < MltdSimulationConstants.MinDanceFormation || placement.formationNumber > MltdSimulationConstants.MaxDanceFormation) {
+                Debug.LogError($"Invalid formation number: {placement.formationNumber}, should be {MltdSimulationConstants.MinDanceFormation} to {MltdSimulationConstants.MaxDanceFormation}.");
                 return;
             }
 
@@ -183,8 +180,8 @@ namespace LeadActress.Runtime.Dancing {
 
             switch (ev.type) {
                 case (int)ScenarioDataType.SingControl: {
-                    if (ev.mute.Length >= formationNumber) {
-                        _isSinging = ev.mute[formationNumber - 1];
+                    if (ev.mute.Length >= placement.formationNumber) {
+                        _isSinging = ev.mute[placement.formationNumber - 1];
                     }
 
                     break;
@@ -203,7 +200,7 @@ namespace LeadActress.Runtime.Dancing {
                     break;
                 }
                 case (int)ScenarioDataType.FacialExpression: {
-                    if (ev.idol == formationNumber - 1) {
+                    if (ev.idol == placement.formationNumber - 1) {
                         ProcessFacialExpression(ev);
                     }
 
@@ -219,7 +216,7 @@ namespace LeadActress.Runtime.Dancing {
 
             if (ev.param != _currFacialExprKey) {
 #if UNITY_EDITOR
-                Debug.Log($"Setting expr {ev.param.ToString()} for idol {formationNumber.ToString()}");
+                Debug.Log($"Setting expr {ev.param.ToString()} for idol {placement.formationNumber.ToString()}");
 #endif
 
                 _prevFacialExprKey = _currFacialExprKey;
@@ -345,11 +342,6 @@ namespace LeadActress.Runtime.Dancing {
         private bool _prevEyeClosed;
 
         private float _eyeCloseStartTime;
-
-        [Tooltip("Which position does this idol stand.")]
-        [Range(MltdSimulationConstants.MinDanceFormation, MltdSimulationConstants.MaxDanceFormation)]
-        [SerializeField]
-        private int _formationNumber = MltdSimulationConstants.MinDanceFormation;
 
         private Dictionary<int, Dictionary<string, float>> _expressionMaps;
 
