@@ -3,21 +3,22 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Imas;
 using JetBrains.Annotations;
+using LeadActress.Runtime.Dancing;
 using UnityEngine;
 
-namespace LeadActress.Runtime.Dancing {
+namespace LeadActress.Runtime.Loaders {
     public static class CameraAnimation {
 
         [NotNull]
-        public static AnimationClip CreateFrom([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
-            // var frames = ComputeKeyFrames(motion);
-            // var clip = CreateClipFromFrames(frames, name);
-            //
-            // return clip;
-            return CreateClipDirect(motion, name);
+        public static AnimationClip CreateClipForCamera([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
+            var frames = ComputeKeyFrames(motion);
+            var clip = CreateClipFromFrames(frames, name);
+
+            return clip;
         }
 
-        private static AnimationClip CreateClipDirect([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
+        [NotNull]
+        public static AnimationClip CreateIndirectClip([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
             var focalLengthCurve = motion.curves.FirstOrDefault(curve => curve.path == "CamBase" && curve.GetPropertyName() == "focalLength");
             var camCutCurve = motion.curves.FirstOrDefault(curve => curve.path == "CamBase" && curve.GetPropertyName() == "camCut");
             var angleXCurve = motion.curves.FirstOrDefault(curve => curve.path == "CamBaseS" && curve.GetPropertyType() == PropertyType.AngleX);
@@ -41,7 +42,6 @@ namespace LeadActress.Runtime.Dancing {
 
             var clip = new AnimationClip();
             clip.frameRate = FrameRate.Mltd;
-            clip.legacy = true;
             clip.name = name;
 
             clip.SetCurve(string.Empty, typeof(IndirectCamera), "focalLength", focalLength);
@@ -68,7 +68,7 @@ namespace LeadActress.Runtime.Dancing {
                     break;
                 }
                 case KeyType.Discrete: {
-                    throw new NotImplementedException();
+                    throw new NotSupportedException();
                 }
                 case KeyType.FullFrame: {
                     var valueCount = curve.values.Length;
@@ -171,7 +171,6 @@ namespace LeadActress.Runtime.Dancing {
 
             clip.frameRate = FrameRate.Mltd;
             clip.name = clipName;
-            clip.legacy = true;
 
             var focalLengthKeyFrames = new Keyframe[frames.Length];
             var posXKeyFrames = new Keyframe[frames.Length];
@@ -185,10 +184,12 @@ namespace LeadActress.Runtime.Dancing {
             for (var i = 0; i < frames.Length; i += 1) {
                 var frame = frames[i];
 
-                focalLengthKeyFrames[i] = new Keyframe(frame.Time, frame.FocalLength);
-                posXKeyFrames[i] = new Keyframe(frame.Time, frame.PositionX);
-                posYKeyFrames[i] = new Keyframe(frame.Time, frame.PositionY);
-                posZKeyFrames[i] = new Keyframe(frame.Time, frame.PositionZ);
+                // We have to specify infinite tangents manually otherwise Unity will use 0 (straight) as default value
+                // and it will cause unwanted translation when switching camera cuts.
+                focalLengthKeyFrames[i] = new Keyframe(frame.Time, frame.FocalLength, float.NegativeInfinity, float.PositiveInfinity);
+                posXKeyFrames[i] = new Keyframe(frame.Time, frame.PositionX, float.NegativeInfinity, float.PositiveInfinity);
+                posYKeyFrames[i] = new Keyframe(frame.Time, frame.PositionY, float.NegativeInfinity, float.PositiveInfinity);
+                posZKeyFrames[i] = new Keyframe(frame.Time, frame.PositionZ, float.NegativeInfinity, float.PositiveInfinity);
 
                 var pos = new Vector3(frame.PositionX, frame.PositionY, frame.PositionZ);
                 var tgt = new Vector3(frame.TargetX, frame.TargetY, frame.TargetZ);
@@ -198,10 +199,10 @@ namespace LeadActress.Runtime.Dancing {
                 var rotZ = frame.AngleZ;
                 var q = Quaternion.Euler(rot0.x, rot0.y, rotZ);
 
-                rotXKeyFrames[i] = new Keyframe(frame.Time, q.x);
-                rotYKeyFrames[i] = new Keyframe(frame.Time, q.y);
-                rotZKeyFrames[i] = new Keyframe(frame.Time, q.z);
-                rotWKeyFrames[i] = new Keyframe(frame.Time, q.w);
+                rotXKeyFrames[i] = new Keyframe(frame.Time, q.x, float.NegativeInfinity, float.PositiveInfinity);
+                rotYKeyFrames[i] = new Keyframe(frame.Time, q.y, float.NegativeInfinity, float.PositiveInfinity);
+                rotZKeyFrames[i] = new Keyframe(frame.Time, q.z, float.NegativeInfinity, float.PositiveInfinity);
+                rotWKeyFrames[i] = new Keyframe(frame.Time, q.w, float.NegativeInfinity, float.PositiveInfinity);
             }
 
             var focalLengthCurve = new AnimationCurve(focalLengthKeyFrames);
@@ -256,6 +257,7 @@ namespace LeadActress.Runtime.Dancing {
             return duration;
         }
 
+        // TODO: use AnimationCurve.Evaluate()
         private static float GetInterpolatedValue([NotNull] Curve curve, float time) {
             var valueCount = curve.values.Length;
 

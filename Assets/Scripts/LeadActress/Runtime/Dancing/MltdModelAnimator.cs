@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using LeadActress.Runtime.Loaders;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace LeadActress.Runtime.Dancing {
@@ -41,16 +42,19 @@ namespace LeadActress.Runtime.Dancing {
             var modelAnimator = loaded.Body.GetComponent<Animator>();
             Debug.Assert(modelAnimator != null);
 
-            var modelAnimation = loaded.Body.AddComponent<Animation>();
+            modelAnimator.keepAnimatorControllerStateOnDisable = false;
 
             var scenario = await scenarioLoader.LoadAsync();
 
-            var clip = await danceLoader.LoadAsync(scenario);
+            var controller = await danceLoader.LoadAsync(scenario);
+            modelAnimator.runtimeAnimatorController = controller;
 
-            modelAnimation.AddClip(clip, clip.name);
-            modelAnimation.clip = clip;
+            // Remember to set this flag otherwise there will be some flickering when switching target idols
+            modelAnimator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            modelAnimator.enabled = false;
 
-            _modelAnimation = modelAnimation;
+            _animatorController = controller;
+            _modelAnimator = modelAnimator;
 
             {
                 var face = loaded.Head.transform.Find("obj_head_GP/face").gameObject;
@@ -66,13 +70,16 @@ namespace LeadActress.Runtime.Dancing {
 
         private void Update() {
             if (playerControl.isOnPlaying) {
-                _modelAnimation.Play();
+                _modelAnimator.Rebind();
+                _modelAnimator.enabled = true;
             } else if (playerControl.isOnStopping) {
-                _modelAnimation.Stop();
+                _modelAnimator.enabled = false;
             }
         }
 
-        private Animation _modelAnimation;
+        private Animator _modelAnimator;
+
+        private AnimatorController _animatorController;
 
         [Tooltip("Which position does this idol stand.")]
         [SerializeField]

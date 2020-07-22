@@ -6,7 +6,7 @@ using Imas.Live;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace LeadActress.Runtime.Dancing {
+namespace LeadActress.Runtime.Loaders {
     internal static class DanceAnimation {
 
         public sealed class CreateConfig {
@@ -290,7 +290,6 @@ namespace LeadActress.Runtime.Dancing {
 
             clip.frameRate = FrameRate.Mltd;
             clip.name = clipName;
-            clip.legacy = true;
 
             foreach (var kv in frameDict) {
                 var path = kv.Key;

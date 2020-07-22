@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using JetBrains.Annotations;
 
-namespace LeadActress.Runtime.Dancing {
+namespace LeadActress.Runtime.Loaders {
     public sealed class DanceKeyFrame {
 
         public DanceKeyFrame(int frameIndex, [NotNull] string path) {

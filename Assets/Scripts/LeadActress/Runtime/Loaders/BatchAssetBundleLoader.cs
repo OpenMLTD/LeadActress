@@ -47,8 +47,8 @@ namespace LeadActress.Runtime.Loaders {
 
             try {
                 bundle = await LoadFromRelativePathInternalAsync(relativePath);
-            } catch (Exception) {
-                info.Fail();
+            } catch (Exception ex) {
+                info.Fail(ex);
                 throw;
             }
 
@@ -81,7 +81,11 @@ namespace LeadActress.Runtime.Loaders {
             if (info.IsSuccessful()) {
                 return info.Result;
             } else {
-                throw new FileLoadException($"Failed to load bundle at relative path: {relativePath}", relativePath);
+                if (info.Exception != null) {
+                    throw info.Exception;
+                } else {
+                    throw new FileLoadException($"Failed to load bundle at relative path: {relativePath}", relativePath);
+                }
             }
         }
 

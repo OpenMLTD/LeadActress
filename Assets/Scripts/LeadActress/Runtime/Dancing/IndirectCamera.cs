@@ -76,7 +76,7 @@ namespace LeadActress.Runtime.Dancing {
             scenarioSignal.EventEmitted -= OnSignal;
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             if (!playerControl.isPlaying) {
                 return;
             }

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace LeadActress.Utilities {
     public static class AsyncLoadInfoExtensions {
@@ -6,6 +7,11 @@ namespace LeadActress.Utilities {
         public static void Success<T>([NotNull] this AsyncLoadInfo<T> info, in T result) {
             info.Result = result;
             info.State = AsyncLoadState.Successful;
+        }
+
+        public static void Fail<T>([NotNull] this AsyncLoadInfo<T> info, [NotNull] Exception exception) {
+            info.State = AsyncLoadState.Failed;
+            info.Exception = exception;
         }
 
         public static void Fail<T>([NotNull] this AsyncLoadInfo<T> info) {

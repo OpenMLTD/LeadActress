@@ -4,6 +4,7 @@ using Imas;
 using JetBrains.Annotations;
 using LeadActress.Runtime.Dancing;
 using LeadActress.Utilities;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace LeadActress.Runtime.Loaders {
@@ -14,16 +15,22 @@ namespace LeadActress.Runtime.Loaders {
 
         public CommonResourceProperties commonResourceProperties;
 
-        public async UniTask<AnimationClip> LoadAsync() {
+        public async UniTask<AnimatorController> LoadAsync(CameraControlMode cameraControlMode) {
+            var group = await LoadClipsAsync(cameraControlMode);
+            var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"cam_{commonResourceProperties.songResourceName}");
+            return controller;
+        }
+
+        private async UniTask<AnimationGroup> LoadClipsAsync(CameraControlMode cameraControlMode) {
             if (_asyncLoadInfo != null) {
                 return await ReturnExistingAsync();
             }
 
-            AsyncLoadInfo<AnimationClip> info = null;
+            AsyncLoadInfo<AnimationGroup> info = null;
 
             lock (this) {
                 if (_asyncLoadInfo == null) {
-                    info = new AsyncLoadInfo<AnimationClip>();
+                    info = new AsyncLoadInfo<AnimationGroup>();
                     _asyncLoadInfo = info;
                 }
             }
@@ -43,24 +50,68 @@ namespace LeadActress.Runtime.Loaders {
 
             var camBundle = await bundleLoader.LoadFromRelativePathAsync($"{camAssetName}.imo.unity3d");
 
-            var camAssetPath = $"assets/imas/resources/exclude/imo/camera/{songResourceName}/{camAssetName}_cam.imo.asset";
-            var camData = camBundle.LoadAsset<CharacterImasMotionAsset>(camAssetPath);
+            AnimationClip mainCamera;
 
-            var clip = CameraAnimation.CreateFrom(camData, camAssetName);
+            {
+                var camAssetPath = $"assets/imas/resources/exclude/imo/camera/{songResourceName}/{camAssetName}_cam.imo.asset";
+                var mainCamData = camBundle.LoadAsset<CharacterImasMotionAsset>(camAssetPath);
 
-            info.Success(clip);
+                switch (cameraControlMode) {
+                    case CameraControlMode.Direct:
+                        mainCamera = CameraAnimation.CreateClipForCamera(mainCamData, camAssetName);
+                        break;
+                    case CameraControlMode.Indirect:
+                        mainCamera = CameraAnimation.CreateIndirectClip(mainCamData, camAssetName);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(cameraControlMode), cameraControlMode, null);
+                }
+            }
 
-            return clip;
+            AnimationClip LoadAppealMotion(string postfix) {
+                // For portrait variations: ".../{camAssetName}_tate_{postfix}.imo.asset"
+                var assetPath = $"assets/imas/resources/exclude/imo/camera/{songResourceName}/{camAssetName}_{postfix}.imo.asset";
+
+                if (!camBundle.Contains(assetPath)) {
+                    return null;
+                }
+
+                var motionData = camBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
+                AnimationClip result;
+
+                switch (cameraControlMode) {
+                    case CameraControlMode.Direct:
+                        result = CameraAnimation.CreateClipForCamera(motionData, $"{camAssetName}_{postfix}");
+                        break;
+                    case CameraControlMode.Indirect:
+                        result = CameraAnimation.CreateIndirectClip(motionData, $"{camAssetName}_{postfix}");
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(cameraControlMode), cameraControlMode, null);
+                }
+
+                return result;
+            }
+
+            var specialAppeal = LoadAppealMotion("apg");
+            var anotherAppeal = LoadAppealMotion("apa");
+            var gorgeousAppeal = LoadAppealMotion("bpg");
+
+            var group = new AnimationGroup(mainCamera, specialAppeal, anotherAppeal, gorgeousAppeal);
+
+            info.Success(group);
+
+            return group;
         }
 
-        private UniTask<AnimationClip> ReturnExistingAsync() {
+        private UniTask<AnimationGroup> ReturnExistingAsync() {
             Debug.Assert(_asyncLoadInfo != null);
             var resName = commonResourceProperties.songResourceName;
             return AsyncLoadInfo.ReturnExistingAsync(_asyncLoadInfo, $"Failed to load camera animation for {resName}.");
         }
 
         [CanBeNull]
-        private AsyncLoadInfo<AnimationClip> _asyncLoadInfo;
+        private AsyncLoadInfo<AnimationGroup> _asyncLoadInfo;
 
     }
 }

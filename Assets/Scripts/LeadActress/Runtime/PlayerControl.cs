@@ -55,7 +55,6 @@ namespace LeadActress.Runtime {
 
             if (isPlaying) {
                 _startTime = Time.time;
-            } else {
                 relativeTime = 0;
             }
 

@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 266304303}
   - component: {fileID: 266304302}
   - component: {fileID: 266304301}
+  - component: {fileID: 266304304}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -470,6 +471,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &266304304
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266304300}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &316762232
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +660,6 @@ GameObject:
   - component: {fileID: 447180661}
   - component: {fileID: 447180660}
   - component: {fileID: 447180664}
-  - component: {fileID: 447180663}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -699,10 +718,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdf24fe01a4461899507ffa70f2cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 266304302}
+  targetIndirectCamera: {fileID: 447180660}
   playerControl: {fileID: 1661877133}
   cameraLoader: {fileID: 447180662}
-  cameraAnimator: {fileID: 447180664}
-  cameraAnimation: {fileID: 447180663}
+  cameraControlMode: 0
 --- !u!114 &447180662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,21 +738,6 @@ MonoBehaviour:
   bundleLoader: {fileID: 567596771}
   commonResourceProperties: {fileID: 11400000, guid: 83c27f8977275134ba02f433367a9167,
     type: 2}
---- !u!111 &447180663
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 447180658}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!95 &447180664
 Animator:
   serializedVersion: 3

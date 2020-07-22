@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace LeadActress.Utilities {
     public sealed class AsyncLoadInfo<T> {
@@ -10,6 +11,9 @@ namespace LeadActress.Utilities {
 
         [CanBeNull]
         public T Result;
+
+        [CanBeNull]
+        public Exception Exception;
 
         public AsyncLoadState State;
 

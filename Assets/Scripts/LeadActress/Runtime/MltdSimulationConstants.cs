@@ -7,11 +7,11 @@ namespace LeadActress.Runtime {
 
         public const int MinDanceMotion = 1;
 
-        public const int MaxDanceMotion = 5;
+        public const int MaxDanceMotion = 13;
 
         public const int MinDanceFormation = 1;
 
-        public const int MaxDanceFormation = 5;
+        public const int MaxDanceFormation = 39;
 
         public const int MinStageSerial = 1;
 

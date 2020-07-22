@@ -1,4 +1,4 @@
-﻿namespace LeadActress.Runtime.Dancing {
+﻿namespace LeadActress.Runtime.Loaders {
     public sealed class CameraKeyFrame {
 
         public CameraKeyFrame(int frameIndex) {

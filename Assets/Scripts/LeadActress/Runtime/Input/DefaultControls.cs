@@ -34,7 +34,7 @@ namespace LeadActress.Runtime.Input
                     ""name"": """",
                     ""id"": ""219b7e68-32f5-4f75-8ab4-93b74596728e"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Toggle Playback"",

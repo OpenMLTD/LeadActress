@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
 using Imas;
@@ -6,6 +7,7 @@ using Imas.Live;
 using JetBrains.Annotations;
 using LeadActress.Runtime.Dancing;
 using LeadActress.Utilities;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace LeadActress.Runtime.Loaders {
@@ -26,16 +28,22 @@ namespace LeadActress.Runtime.Loaders {
             set => _formationNumber = value;
         }
 
-        public async UniTask<AnimationClip> LoadAsync([NotNull] ScenarioScrObj scenarioData) {
+        public async UniTask<AnimatorController> LoadAsync([NotNull] ScenarioScrObj scenarioData) {
+            var group = await LoadClipsAsync(scenarioData);
+            var controller = CommonAnimationControllerBuilder.BuildAnimationController(group, $"dan_{commonResourceProperties.songResourceName}_{motionNumber:00}#{formationNumber:00}");
+            return controller;
+        }
+
+        private async UniTask<AnimationGroup> LoadClipsAsync([NotNull] ScenarioScrObj scenarioData) {
             if (_asyncLoadInfo != null) {
                 return await ReturnExistingAsync();
             }
 
-            AsyncLoadInfo<AnimationClip> info = null;
+            AsyncLoadInfo<AnimationGroup> info = null;
 
             lock (this) {
                 if (_asyncLoadInfo == null) {
-                    info = new AsyncLoadInfo<AnimationClip>();
+                    info = new AsyncLoadInfo<AnimationGroup>();
                     _asyncLoadInfo = info;
                 }
             }
@@ -68,22 +76,79 @@ namespace LeadActress.Runtime.Loaders {
                 throw new FormatException($"\"{danceAssetName}\" is not a valid dance asset name.");
             }
 
-            var danceBundle = await bundleLoader.LoadFromRelativePathAsync($"{danceAssetName}.imo.unity3d");
+            var mainDanceBundle = await bundleLoader.LoadFromRelativePathAsync($"{danceAssetName}.imo.unity3d");
 
-            var danceAssetPath = $"assets/imas/resources/exclude/imo/dance/{songResourceName}/{danceAssetName}_dan.imo.asset";
-            var danceData = danceBundle.LoadAsset<CharacterImasMotionAsset>(danceAssetPath);
+            AssetBundle appealBundle = null;
+            bool? appealBundleFound = null;
 
-            // OK, create the animation
             var cfg = DanceAnimation.CreateConfig.Default();
             cfg.FormationNumber = formationNumber;
-            var clip = DanceAnimation.CreateFrom(danceData, scenarioData, danceAssetName, cfg);
 
-            info.Success(clip);
+            AnimationClip mainDance;
 
-            return clip;
+            {
+                var assetPath = $"assets/imas/resources/exclude/imo/dance/{songResourceName}/{danceAssetName}_dan.imo.asset";
+                var motionData = mainDanceBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
+
+                mainDance = DanceAnimation.CreateFrom(motionData, scenarioData, danceAssetName, cfg);
+            }
+
+            async UniTask<AnimationClip> LoadAppealMotionAsync(string postfix) {
+                AnimationClip result;
+                var assetPath = $"assets/imas/resources/exclude/imo/dance/{songResourceName}/{danceAssetName}_{postfix}.imo.asset";
+
+                if (mainDanceBundle.Contains(assetPath)) {
+                    var motionData = mainDanceBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
+                    result = DanceAnimation.CreateFrom(motionData, scenarioData, $"{danceAssetName}_{postfix}", cfg);
+                } else {
+                    if (appealBundleFound.HasValue) {
+                        if (!appealBundleFound.Value) {
+                            return null;
+                        }
+                    } else {
+                        bool found;
+                        (appealBundle, found) = await TryLoadAppealBundleAsync();
+                        appealBundleFound = found;
+                    }
+
+                    if (appealBundle != null && appealBundle.Contains(assetPath)) {
+                        var motionData = appealBundle.LoadAsset<CharacterImasMotionAsset>(assetPath);
+                        result = DanceAnimation.CreateFrom(motionData, scenarioData, $"{danceAssetName}_{postfix}", cfg);
+                    } else {
+                        result = null;
+                    }
+                }
+
+                return result;
+            }
+
+            var specialAppeal = await LoadAppealMotionAsync("apg");
+            var anotherAppeal = await LoadAppealMotionAsync("apa");
+            var gorgeousAppeal = await LoadAppealMotionAsync("bpg");
+
+            var animationGroup = new AnimationGroup(mainDance, specialAppeal, anotherAppeal, gorgeousAppeal);
+
+            info.Success(animationGroup);
+
+            return animationGroup;
         }
 
-        private UniTask<AnimationClip> ReturnExistingAsync() {
+        private async UniTask<( AssetBundle, bool)> TryLoadAppealBundleAsync() {
+            AssetBundle appealBundle;
+            bool successful;
+
+            try {
+                appealBundle = await bundleLoader.LoadFromRelativePathAsync($"dan_{commonResourceProperties.songResourceName}_ap.imo.unity3d");
+                successful = true;
+            } catch (FileNotFoundException) {
+                appealBundle = null;
+                successful = false;
+            }
+
+            return (appealBundle, successful);
+        }
+
+        private UniTask<AnimationGroup> ReturnExistingAsync() {
             Debug.Assert(_asyncLoadInfo != null);
             var resName = commonResourceProperties.songResourceName;
             return AsyncLoadInfo.ReturnExistingAsync(_asyncLoadInfo, $"Failed to load dance for {resName}.");
@@ -103,7 +168,7 @@ namespace LeadActress.Runtime.Loaders {
         private int _formationNumber = MltdSimulationConstants.MinDanceFormation;
 
         [CanBeNull]
-        private AsyncLoadInfo<AnimationClip> _asyncLoadInfo;
+        private AsyncLoadInfo<AnimationGroup> _asyncLoadInfo;
 
     }
 }
