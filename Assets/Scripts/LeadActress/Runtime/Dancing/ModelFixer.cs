@@ -15,13 +15,13 @@ namespace LeadActress.Runtime.Dancing {
 
         public Material cutoutMaterial;
 
-        public void FixAllShaders([NotNull] GameObject prefab, [NotNull] GameObject instance) {
+        public void FixAllMaterials([NotNull] GameObject prefab, [NotNull] GameObject instance, [NotNull] ModelFixerOptions options) {
             var oldRenderers = prefab.GetComponentsInChildren<SkinnedMeshRenderer>();
             var newRenderers = instance.GetComponentsInChildren<SkinnedMeshRenderer>();
             var rendererCount = oldRenderers.Length;
 
             for (var i = 0; i < rendererCount; i += 1) {
-                FixMaterials(oldRenderers[i], newRenderers[i]);
+                FixMaterials(oldRenderers[i], newRenderers[i], options);
             }
         }
 
@@ -111,7 +111,7 @@ namespace LeadActress.Runtime.Dancing {
             }
         }
 
-        private void FixMaterials([NotNull] SkinnedMeshRenderer prefabRenderer, [NotNull] SkinnedMeshRenderer instanceRenderer) {
+        private void FixMaterials([NotNull] SkinnedMeshRenderer prefabRenderer, [NotNull] SkinnedMeshRenderer instanceRenderer, [NotNull] ModelFixerOptions options) {
             var oldMaterials = prefabRenderer.sharedMaterials;
             var newMaterials = instanceRenderer.materials;
             var materialCount = oldMaterials.Length;
@@ -134,9 +134,17 @@ namespace LeadActress.Runtime.Dancing {
                     ApplyNewMaterial(oldMaterial, newMaterial);
                     newMaterials[i] = newMaterial;
                 } else if (oldMaterial.name.Contains("eyel") || oldMaterial.name.Contains("eyer")) {
-                    newMaterial.shader = Shader.Find("Unlit/Dual");
+                    if (options.EyesHighlights) {
+                        newMaterial.shader = Shader.Find("Unlit/Dual");
+                    } else {
+                        newMaterial.shader = Shader.Find("Unlit/Texture");
+                    }
                 } else if (oldMaterial.name.Contains("hair")) {
-                    newMaterial.shader = Shader.Find("Unlit/Dual");
+                    if (options.HairHighlights) {
+                        newMaterial.shader = Shader.Find("Unlit/Dual");
+                    } else {
+                        newMaterial.shader = Shader.Find("Unlit/Texture");
+                    }
                 } else {
                     // newMaterial.shader = Shader.Find("Unlit/Texture");
                     newMaterial = Instantiate(clothesMaterial);

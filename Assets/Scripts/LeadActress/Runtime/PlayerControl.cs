@@ -27,7 +27,7 @@ namespace LeadActress.Runtime {
             _controls.DefaultGameplay.Disable();
         }
 
-        private void Update() {
+        private void FixedUpdate() {
             if (_isPlayingJustChanged) {
                 if (isPlaying) {
                     isOnPlaying = true;
@@ -42,7 +42,7 @@ namespace LeadActress.Runtime {
             }
 
             if (isPlaying) {
-                relativeTime = Time.time - _startTime;
+                relativeTime = Time.fixedTime - _startTime;
             }
         }
 
@@ -54,7 +54,7 @@ namespace LeadActress.Runtime {
             isPlaying = !isPlaying;
 
             if (isPlaying) {
-                _startTime = Time.time;
+                _startTime = Time.fixedTime;
                 relativeTime = 0;
             }
 

@@ -41,6 +41,16 @@ namespace LeadActress.Runtime.Loaders {
             set => _headCostumeVariation = value;
         }
 
+        public bool importEyesHighlights {
+            get => _importEyesHighlights;
+            set => _importEyesHighlights = value;
+        }
+
+        public bool importHairHighlights {
+            get => _importHairHighlights;
+            set => _importHairHighlights = value;
+        }
+
         public async UniTask<ModelLoadResult> LoadAndInstantiateAsync() {
             if (_asyncLoadInfo != null) {
                 return await ReturnExistingAsync();
@@ -95,6 +105,10 @@ namespace LeadActress.Runtime.Loaders {
             var bodyModelBundle = await bundleLoader.LoadFromRelativePathAsync($"{bodyModelAssetName}.unity3d");
             var headModelBundle = await bundleLoader.LoadFromRelativePathAsync($"{headModelAssetName}.unity3d");
 
+            var fixerOptions = ModelFixerOptions.CreateDefault();
+            fixerOptions.EyesHighlights = importEyesHighlights;
+            fixerOptions.HairHighlights = importHairHighlights;
+
             GameObject bodyInstance;
             SwayController bodySway;
 
@@ -111,7 +125,7 @@ namespace LeadActress.Runtime.Loaders {
 
                 bodyInstance = Instantiate(model, stageObject.transform);
 
-                modelFixer.FixAllShaders(model, bodyInstance);
+                modelFixer.FixAllMaterials(model, bodyInstance, fixerOptions);
 
                 var swayPath = $"assets/imas/resources/chara/body/{bodyCostumeName}/{assetGroup}/{bodyModelAssetName}_sway.txt";
                 var swayFile = bodyModelBundle.LoadAsset<TextAsset>(swayPath);
@@ -137,7 +151,7 @@ namespace LeadActress.Runtime.Loaders {
                 headInstance = Instantiate(model, bodyAtama, true);
                 headInstance.name = CharaHeadObjectName;
 
-                modelFixer.FixAllShaders(model, headInstance);
+                modelFixer.FixAllMaterials(model, headInstance, fixerOptions);
 
                 var swayPath = $"assets/imas/resources/chara/head/{headCostumeName}/{assetGroup}/{headModelAssetName}_sway.txt";
                 var swayFile = headModelBundle.LoadAsset<TextAsset>(swayPath);
@@ -193,6 +207,12 @@ namespace LeadActress.Runtime.Loaders {
         // e.g.: 015siz
         [SerializeField]
         private string _bodyCostumeVariation = "001har";
+
+        [SerializeField]
+        private bool _importEyesHighlights = true;
+
+        [SerializeField]
+        private bool _importHairHighlights = true;
 
         [CanBeNull]
         private AsyncLoadInfo<ModelLoadResult> _asyncLoadInfo;
