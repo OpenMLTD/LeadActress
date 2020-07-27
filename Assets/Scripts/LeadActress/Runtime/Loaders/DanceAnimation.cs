@@ -10,13 +10,17 @@ namespace LeadActress.Runtime.Loaders {
     internal static class DanceAnimation {
 
         public static async UniTask<AnimationClip> CreateAsync([NotNull] CharacterImasMotionAsset motion, [NotNull] string name) {
+            await UniTask.SwitchToThreadPool();
+
             var frameDict = CreateGroupedFramesByPath(motion);
+
+            await UniTask.SwitchToMainThread();
 
             var clip = new AnimationClip();
             clip.name = name;
             clip.frameRate = FrameRate.Mltd;
 
-            await ApplyClipFromGroupedFrames(clip, frameDict);
+            ApplyClipFromGroupedFrames(clip, frameDict);
 
             return clip;
         }
@@ -252,17 +256,8 @@ namespace LeadActress.Runtime.Loaders {
             return curValue * (1 - p) + nextValue * p;
         }
 
-        private static async UniTask ApplyClipFromGroupedFrames([NotNull] AnimationClip clip, [NotNull] Dictionary<string, List<DanceKeyFrame>> frameDict) {
-            var counter = 0;
-
+        private static void ApplyClipFromGroupedFrames([NotNull] AnimationClip clip, [NotNull] Dictionary<string, List<DanceKeyFrame>> frameDict) {
             foreach (var kv in frameDict) {
-                counter += 1;
-
-                if (counter >= FramesPerBatch) {
-                    counter = 0;
-                    await UniTask.Yield();
-                }
-
                 var path = kv.Key;
                 var frameList = kv.Value;
                 var frameListCount = frameList.Count;
@@ -329,8 +324,6 @@ namespace LeadActress.Runtime.Loaders {
                 }
             }
         }
-
-        private const int FramesPerBatch = 50;
 
     }
 }
