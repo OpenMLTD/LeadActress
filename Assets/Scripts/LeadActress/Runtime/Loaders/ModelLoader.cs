@@ -401,6 +401,10 @@ namespace LeadActress.Runtime.Loaders {
                     if (exBodyBundle.Contains(newTexPath)) {
                         var newTexture = exBodyBundle.LoadAsset<Texture2D>(newTexPath);
                         material.SetTexture("_MainTex", newTexture);
+
+                        if (material.shader.name == "VRM/MToon") {
+                            material.SetTexture("_ShadeTexture", newTexture);
+                        }
                     } else {
                         Debug.LogWarning($"Cannot find texture override: {newTexPath}");
                     }
